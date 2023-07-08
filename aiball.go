@@ -5,6 +5,11 @@ import (
 	"image/color"
 	"image/color/palette"
 	"image/draw"
+	"image/gif"
+	"os"
+	"time"
+
+	"github.com/godump/doa"
 )
 
 type AIBall struct {
@@ -15,6 +20,20 @@ type AIBall struct {
 	RGBA     []color.RGBA
 	CellSize int
 	CellPads int
+	GIFs     gif.GIF
+}
+
+func NewAIBall(r int, c int) *AIBall {
+	cell := make([][]int, r)
+	for i := 0; i < r; i++ {
+		cell[i] = make([]int, c)
+	}
+	return &AIBall{
+		Rows: r,
+		Cols: c,
+		Cell: cell,
+		GIFs: gif.GIF{},
+	}
 }
 
 func (a *AIBall) Draw() *image.Paletted {
@@ -31,4 +50,15 @@ func (a *AIBall) Draw() *image.Paletted {
 		}
 	}
 	return m
+}
+
+func (a *AIBall) Join(d time.Duration) {
+	a.GIFs.Image = append(a.GIFs.Image, a.Draw())
+	a.GIFs.Delay = append(a.GIFs.Delay, int(d.Milliseconds())/10)
+}
+
+func (a *AIBall) Save(name string) {
+	file := doa.Try(os.OpenFile(name, os.O_WRONLY|os.O_TRUNC, 0755))
+	defer file.Close()
+	gif.EncodeAll(file, &a.GIFs)
 }
