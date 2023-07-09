@@ -7,7 +7,6 @@ import (
 	"image/draw"
 	"image/gif"
 	"os"
-	"time"
 
 	"github.com/godump/doa"
 )
@@ -15,7 +14,7 @@ import (
 type AIBall struct {
 	Rows     int
 	Cols     int
-	Cell     [][]int
+	Cell     [][]uint8
 	RGBABase color.RGBA
 	RGBA     []color.RGBA
 	CellSize int
@@ -24,15 +23,31 @@ type AIBall struct {
 }
 
 func NewAIBall(r int, c int) *AIBall {
-	cell := make([][]int, r)
+	cell := make([][]uint8, r)
 	for i := 0; i < r; i++ {
-		cell[i] = make([]int, c)
+		cell[i] = make([]uint8, c)
 	}
+	gifs := gif.GIF{}
 	return &AIBall{
 		Rows: r,
 		Cols: c,
 		Cell: cell,
-		GIFs: gif.GIF{},
+		GIFs: gifs,
+	}
+}
+
+func (a *AIBall) Text(y int, x int, data string, cell uint8) {
+	for _, c := range data {
+		char := Font[c]
+		w := len(char[0])
+		for i := 0; i < len(char); i++ {
+			for j := 0; j < w; j++ {
+				if char[i][j] != 0 {
+					a.Cell[y+i][x+j] = cell
+				}
+			}
+		}
+		x += w + 1
 	}
 }
 
@@ -52,13 +67,13 @@ func (a *AIBall) Draw() *image.Paletted {
 	return m
 }
 
-func (a *AIBall) Join(d time.Duration) {
+func (a *AIBall) Join(d int) {
 	a.GIFs.Image = append(a.GIFs.Image, a.Draw())
-	a.GIFs.Delay = append(a.GIFs.Delay, int(d.Milliseconds())/10)
+	a.GIFs.Delay = append(a.GIFs.Delay, d)
 }
 
 func (a *AIBall) Save(name string) {
-	file := doa.Try(os.OpenFile(name, os.O_WRONLY|os.O_TRUNC, 0755))
+	file := doa.Try(os.OpenFile(name, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755))
 	defer file.Close()
 	gif.EncodeAll(file, &a.GIFs)
 }
