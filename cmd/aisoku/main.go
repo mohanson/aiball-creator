@@ -118,6 +118,18 @@ func mainRank(aibo *aiball.AIBall, user []int, path string) {
 		}
 		aibo.Join(16)
 	}
+	aibo.Join(84)
+}
+
+func mainWink(aibo *aiball.AIBall) {
+	for i := 0; i < aibo.Rows/2; i++ {
+		for j := 0; j < aibo.Cols; j++ {
+			aibo.Cell[i][j] = 5
+			aibo.Cell[aibo.Rows-1-i][j] = 5
+		}
+		aibo.Join(4)
+	}
+	aibo.Join(96)
 }
 
 func main() {
@@ -199,5 +211,6 @@ func main() {
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	})
 	mainRank(aibo, []int{7, 15}, "rdrdrddllrruuldldruuuldduuuurdddd")
+	mainWink(aibo)
 	aibo.Save("res/aisoku.gif")
 }
