@@ -7,6 +7,7 @@ import (
 	"image/draw"
 	"image/gif"
 	"os"
+	"os/exec"
 
 	"github.com/godump/doa"
 )
@@ -76,4 +77,7 @@ func (a *AIBall) Save(name string) {
 	file := doa.Try(os.OpenFile(name, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755))
 	defer file.Close()
 	gif.EncodeAll(file, &a.GIFs)
+	if _, err := exec.LookPath("gifsicle"); err == nil {
+		doa.Nil(exec.Command("gifsicle", "-O3", name, "-o", name).Run())
+	}
 }
