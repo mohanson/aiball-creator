@@ -7,7 +7,7 @@ import (
 )
 
 func mainShowLogo(aibo *aiball.AIBall) {
-	aibo.Text(6, 2, "AISOKU", 2)
+	aibo.Text(6, 2, "AISOKO", 2)
 	aibo.Join(200)
 }
 
@@ -212,5 +212,5 @@ func main() {
 	})
 	mainRank(aibo, []int{7, 15}, "rdrdrddllrruuldldruuuldduuuurdddd")
 	mainWink(aibo)
-	aibo.Save("res/aisoku.gif")
+	aibo.Save("res/aisoko.gif")
 }

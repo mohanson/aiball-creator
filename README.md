@@ -9,8 +9,8 @@ AIBall Creator is a cutting-edge software that empowers users to create stunning
 $ apt install gifsicle
 
 $ git clone https://github.com/mohanson/aiball-creator
-# The resulting video is located at res/aisoku.gif
-$ go run cmd/aisoku/main.go
+# The resulting video is located at res/aisoko.gif
+$ go run cmd/aisoko/main.go
 ```
 
-![img](./res/aisoku.gif)
+![img](./res/aisoko.gif)
