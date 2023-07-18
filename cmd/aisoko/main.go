@@ -7,7 +7,7 @@ import (
 )
 
 func mainShowLogo(aibo *aiball.AIBall) {
-	aibo.Text(6, 2, "AISOKO", 2)
+	aibo.Text(2, 6, "AISOKO", 2)
 	aibo.Join(200)
 }
 
@@ -133,7 +133,7 @@ func mainWink(aibo *aiball.AIBall) {
 }
 
 func main() {
-	aibo := aiball.NewAIBall(18, 32)
+	aibo := aiball.NewAIBall(32, 18)
 	aibo.RGBABase = color.RGBA{0xff, 0xff, 0xff, 0xff}
 	aibo.RGBA = []color.RGBA{
 		{0xeb, 0xed, 0xf0, 0xff},
