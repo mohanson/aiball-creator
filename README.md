@@ -10,7 +10,15 @@ $ apt install gifsicle
 
 $ git clone https://github.com/mohanson/aiball-creator
 # The resulting video is located at res/aisoko.gif
-$ go run cmd/aisoko/main.go
+$ go run cmd/boxes/main.go
 ```
 
-![img](./res/aisoko.gif)
+![img](./res/boxes.gif)
+
+You can also use aiball to make static images
+
+```sh
+$ go run cmd/boxes-picture/main.go p0
+```
+
+![img](./res/boxes-p0.png)
