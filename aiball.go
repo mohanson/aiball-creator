@@ -6,8 +6,10 @@ import (
 	"image/color/palette"
 	"image/draw"
 	"image/gif"
+	"image/png"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/godump/doa"
 )
@@ -84,8 +86,13 @@ func (a *AIBall) Join(d int) {
 func (a *AIBall) Save(name string) {
 	file := doa.Try(os.OpenFile(name, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755))
 	defer file.Close()
-	gif.EncodeAll(file, &a.GIFs)
-	if _, err := exec.LookPath("gifsicle"); err == nil {
-		doa.Nil(exec.Command("gifsicle", "-O3", name, "-o", name).Run())
+	if strings.HasSuffix(name, ".gif") {
+		gif.EncodeAll(file, &a.GIFs)
+		if _, err := exec.LookPath("gifsicle"); err == nil {
+			doa.Nil(exec.Command("gifsicle", "-O3", name, "-o", name).Run())
+		}
+	}
+	if strings.HasSuffix(name, ".png") {
+		doa.Nil(png.Encode(file, a.GIFs.Image[0]))
 	}
 }
