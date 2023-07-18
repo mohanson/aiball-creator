@@ -21,7 +21,6 @@ func mainP0() {
 	}
 	aibo.CellSize = 13
 	aibo.CellPads = 2
-
 	data := [][]uint8{
 		{1, 1, 1, 1, 1, 0, 0, 0, 0},
 		{1, 2, 0, 0, 1, 0, 0, 0, 0},
@@ -66,7 +65,6 @@ func mainP1() {
 	}
 	aibo.CellSize = 13
 	aibo.CellPads = 2
-
 	data := [][]uint8{
 		{1, 1, 1, 1, 1, 0, 0, 0, 0},
 		{1, 2, 0, 0, 1, 0, 0, 0, 0},
@@ -97,6 +95,59 @@ func mainP1() {
 	aibo.Save("res/boxes-p1.png")
 }
 
+func mainP2() {
+	aibo := aiball.NewAIBall(32, 32)
+	aibo.RGBABase = color.RGBA{0xff, 0xff, 0xff, 0xff}
+	aibo.RGBA = []color.RGBA{
+		{0xeb, 0xed, 0xf0, 0xff},
+		{0xd1, 0xba, 0x74, 0xff},
+		{0xf4, 0x60, 0x6c, 0xff},
+		{0x19, 0xca, 0xad, 0xff},
+		{0x9c, 0x9c, 0x9c, 0xff},
+		{0x2f, 0x4f, 0x4f, 0xff},
+		{0xf4, 0x60, 0x6c, 0xff},
+	}
+	aibo.CellSize = 26
+	aibo.CellPads = 4
+	aibo.Text(4, 13, "BOXES", 2)
+	aibo.Join(0)
+	aibo.Save("res/boxes-p2.png")
+}
+
+func mainP3() {
+	aibo := aiball.NewAIBall(13, 13)
+	aibo.RGBABase = color.RGBA{0xff, 0xff, 0xff, 0xff}
+	aibo.RGBA = []color.RGBA{
+		{0xeb, 0xed, 0xf0, 0xff},
+		{0xd1, 0xba, 0x74, 0xff},
+		{0xf4, 0x60, 0x6c, 0xff},
+		{0x19, 0xca, 0xad, 0xff},
+		{0x9c, 0x9c, 0x9c, 0xff},
+		{0x2f, 0x4f, 0x4f, 0xff},
+		{0xf4, 0x60, 0x6c, 0xff},
+	}
+	aibo.CellSize = 26
+	aibo.CellPads = 4
+	data := [][]uint8{
+		{1, 1, 1, 1, 1, 0, 0, 0, 0},
+		{1, 2, 0, 0, 1, 0, 0, 0, 0},
+		{1, 0, 3, 3, 1, 0, 1, 1, 1},
+		{1, 0, 3, 0, 1, 0, 1, 4, 1},
+		{1, 1, 1, 0, 1, 1, 1, 4, 1},
+		{0, 1, 1, 0, 0, 0, 0, 4, 1},
+		{0, 1, 0, 0, 0, 1, 0, 0, 1},
+		{0, 1, 0, 0, 0, 1, 1, 1, 1},
+		{0, 1, 1, 1, 1, 1, 0, 0, 0},
+	}
+	for i := 0; i < len(data); i++ {
+		for j := 0; j < len(data[0]); j++ {
+			aibo.Cell[i+2][j+2] = data[i][j]
+		}
+	}
+	aibo.Join(0)
+	aibo.Save("res/boxes-p3.png")
+}
+
 func main() {
 	flag.Parse()
 	switch flag.Arg(0) {
@@ -104,5 +155,9 @@ func main() {
 		mainP0()
 	case "p1":
 		mainP1()
+	case "p2":
+		mainP2()
+	case "p3":
+		mainP3()
 	}
 }
