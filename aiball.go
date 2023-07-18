@@ -37,6 +37,14 @@ func NewAIBall(x int, y int) *AIBall {
 	}
 }
 
+func (a *AIBall) Copy(x int, y int, data [][]uint8) {
+	for i, r := range data {
+		for j, c := range r {
+			a.Cell[y+i][x+j] = c
+		}
+	}
+}
+
 func (a *AIBall) Text(x int, y int, data string, cell uint8) {
 	for _, c := range data {
 		char := Font[c]
